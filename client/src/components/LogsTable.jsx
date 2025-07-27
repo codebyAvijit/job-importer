@@ -14,32 +14,42 @@ function LogsTable() {
   }, []);
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl font-semibold mb-2">Import Logs</h2>
-      <table className="w-full border-collapse border border-gray-400 text-sm">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border px-2 py-1">Timestamp</th>
-            <th className="border px-2 py-1">Total</th>
-            <th className="border px-2 py-1">New</th>
-            <th className="border px-2 py-1">Updated</th>
-            <th className="border px-2 py-1">Failed</th>
-          </tr>
-        </thead>
-        <tbody>
-          {logs.map((log, i) => (
-            <tr key={i} className="text-center">
-              <td className="border px-2 py-1">
-                {new Date(log.timestamp).toLocaleString()}
-              </td>
-              <td className="border px-2 py-1">{log.totalFetched}</td>
-              <td className="border px-2 py-1">{log.newJobs}</td>
-              <td className="border px-2 py-1">{log.updatedJobs}</td>
-              <td className="border px-2 py-1">{log.failedJobs}</td>
+    <div className="mt-8">
+      <h2 className="text-2xl font-bold text-indigo-700 mb-4">
+        📋 Import Logs
+      </h2>
+      <div className="overflow-x-auto rounded-xl shadow-lg border border-indigo-100 bg-white">
+        <table className="min-w-full text-sm text-center table-auto">
+          <thead className="bg-indigo-100 text-indigo-900">
+            <tr>
+              <th className="px-4 py-2">🕒 Timestamp</th>
+              <th className="px-4 py-2">📦 Total</th>
+              <th className="px-4 py-2 text-green-600">✅ New</th>
+              <th className="px-4 py-2 text-blue-600">🔁 Updated</th>
+              <th className="px-4 py-2 text-red-600">❌ Failed</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {logs.map((log, i) => (
+              <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                <td className="px-4 py-2">
+                  {new Date(log.timestamp).toLocaleString()}
+                </td>
+                <td className="px-4 py-2">{log.totalFetched}</td>
+                <td className="px-4 py-2 text-green-600 font-medium">
+                  {log.newJobs}
+                </td>
+                <td className="px-4 py-2 text-blue-600 font-medium">
+                  {log.updatedJobs}
+                </td>
+                <td className="px-4 py-2 text-red-600 font-medium">
+                  {log.failedJobs}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
