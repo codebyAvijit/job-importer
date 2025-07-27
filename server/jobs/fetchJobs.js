@@ -13,8 +13,9 @@ const fetchJobs = async () => {
   for (const url of urls) {
     try {
       const res = await axios.get(url);
-      const json = await parser.parseStringPromise(res.data);
-      const jobs = json.rss.channel.item.map((item) => ({
+      const json_res = await parser.parseStringPromise(res.data);
+      console.log(json_res);
+      const jobs = json_res.rss.channel.item.map((item) => ({
         jobId: item.guid,
         title: item.title,
         company: item["job:company"] || "",

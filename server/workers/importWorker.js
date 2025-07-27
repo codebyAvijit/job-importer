@@ -1,16 +1,17 @@
 const { Worker } = require("bullmq");
 const { createClient } = require("redis");
 const mongoose = require("mongoose");
+const Redis = require("ioredis");
 require("dotenv").config();
 
 const Job = require("../models/Job");
 const ImportLog = require("../models/ImportLog");
 
-const connection = createClient({
-  socket: {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-  },
+const connection = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
 });
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 });
 
 const worker = new Worker(
-  "job-importer",
+  "importQueue", // 🔁 make sure this matches your Queue name in jobQueue.js
   async (job) => {
     const { jobs } = job.data;
 
