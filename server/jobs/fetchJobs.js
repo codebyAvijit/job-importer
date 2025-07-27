@@ -14,7 +14,7 @@ const fetchJobs = async () => {
     try {
       const res = await axios.get(url);
       const json_res = await parser.parseStringPromise(res.data);
-      console.log(json_res);
+      // console.log(json_res);
       const jobs = json_res.rss.channel.item.map((item) => ({
         jobId: item.guid,
         title: item.title,
@@ -24,6 +24,8 @@ const fetchJobs = async () => {
         url: item.link,
       }));
       allJobs = allJobs.concat(jobs);
+      // console.log(allJobs);
+      return allJobs;
     } catch (err) {
       console.error(`Error fetching ${url}:`, err.message);
     }

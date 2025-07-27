@@ -23,7 +23,7 @@ const worker = new Worker(
   "importQueue", // 🔁 make sure this matches your Queue name in jobQueue.js
   async (job) => {
     const { jobs } = job.data;
-    console.log(jobs);
+    // console.log(jobs);
     let newJobs = 0,
       updatedJobs = 0,
       failedJobs = 0;

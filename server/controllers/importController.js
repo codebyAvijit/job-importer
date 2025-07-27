@@ -4,7 +4,9 @@ const ImportLog = require("../models/ImportLog");
 
 const triggerImport = async (req, res) => {
   const jobs = await fetchJobs();
+  // console.log(jobs);
   await jobQueue.add("importJobs", { jobs });
+
   return res
     .status(200)
     .json({ message: "Jobs queued for import", count: jobs.length });
